@@ -13,42 +13,61 @@
         }
         .navbar {
             background-color: #10439F;
-            padding: 10px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+        .navbar a {
             color: white;
-            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
         }
         .container {
-            width: 50%;
+            width: 90%;
+            max-width: 800px;
             margin: 20px auto;
             background: white;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        a {
-            color: #874CCC;
-            text-decoration: none;
+        .messages {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-weight: bold;
         }
-        a:hover {
-            text-decoration: underline;
-        }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
     </style>
 </head>
 <body>
+
     <div class="navbar">
-        <a href="{% url 'blog-home' %}" style="color: white;">Home</a> |
-        {% if user.is_authenticated %}
-            <a href="{% url 'logout' %}" style="color: white;">Logout</a>
-        {% else %}
-            <a href="{% url 'login' %}" style="color: white;">Login</a> |
-            <a href="{% url 'register' %}" style="color: white;">Register</a>
-        {% endif %}
+        <div class="nav-links">
+            <a href="{% url 'blog-home' %}">Home</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'profile' %}">Profile</a>
+                <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}">Register</a>
+            {% endif %}
+        </div>
     </div>
 
     <div class="container">
         {% if messages %}
             {% for message in messages %}
-                <p style="color: {% if message.tags == 'success' %}green{% else %}red{% endif %};">
+                <p class="messages {% if message.tags == 'success' %}success{% else %}error{% endif %}">
                     {{ message }}
                 </p>
             {% endfor %}
@@ -56,5 +75,6 @@
 
         {% block content %}{% endblock %}
     </div>
+
 </body>
 </html>

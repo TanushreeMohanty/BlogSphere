@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .container {
+        width: 50%;
+        margin: 20px auto;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+    .profile-box {
+        padding: 20px;
+    }
+    .profile-img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #10439F;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease-in-out;
+    }
+    .profile-img:hover {
+        transform: scale(1.1);
+    }
+    .btn {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 8px 16px;
+        background-color: #874CCC;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background 0.3s;
+    }
+    .btn:hover {
+        background-color: #C65BCF;
+    }
+</style>
+
+<div class="container">
+    <h2>Your Profile</h2>
+    <div class="profile-box">
+        <img src="{{ user.profile.profile_picture.url }}" alt="Profile Picture" class="profile-img">
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        <p><strong>Bio:</strong> {{ user.profile.bio }}</p>
+        <a href="{% url 'profile-edit' %}" class="btn">Edit Profile</a>
+    </div>
+</div>
+{% endblock %}
