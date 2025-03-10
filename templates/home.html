@@ -1,14 +1,28 @@
 {% extends "base.html" %}
 {% block content %}
-    <h2>Welcome to the Blog!</h2>
-    <p>This is the homepage of your blog website.</p>
-
     {% if user.is_authenticated %}
-        <p>Hi, {{ user.username }}! You are logged in.</p>
-        <a href="{% url 'logout' %}">Logout</a>
+        <h2>Hi, {{ user.username }}!</h2>
+        <div class="container">
+            <h2>Blog Feed</h2>
+            {% for post in posts %}
+                <div class="blog-card">
+                    <h3>{{ post.title }}</h3>
+                    <p>{{ post.content }}</p>
+                    <p><strong>By:</strong> {{ post.author.username }} | <strong>On:</strong> {{ post.created_at }}</p>
+                </div>
+            {% endfor %}
+        </div>
+
+
     {% else %}
+        <h2>Welcome to the Blog!</h2>
+        <p>This is the homepage of your blog website.</p>
         <p>You are not logged in.</p>
         <a href="{% url 'login' %}">Login</a> |
         <a href="{% url 'register' %}">Register</a>
     {% endif %}
 {% endblock %}
+
+
+
+
