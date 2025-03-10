@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, ProfileUpdateForm,PostForm
-from .models import Profile,Post
+from .models import Profile,Post,Category,Tag
 
 # View all posts
 def home(request):
@@ -79,7 +79,19 @@ def create_post(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
+            # Assign category
+            new_category = form.cleaned_data.get('new_category')
+            if new_category:
+                post.category = new_category
+
             post.save()
+            form.save_m2m()  # Save many-to-many relationships (tags)
+            
+            # Assign new tags
+            new_tags = form.cleaned_data.get('new_tags')
+            if new_tags:
+                post.tags.add(*new_tags)
+
             messages.success(request, "Post created successfully!")
             return redirect('home')
     else:
