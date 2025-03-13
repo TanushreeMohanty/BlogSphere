@@ -1,10 +1,145 @@
 {% extends "base.html" %}
+
 {% block content %}
-<h2>Register</h2>
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Register</button>
-</form>
-<p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+<style>
+    /* Container Styling */
+    .register-container {
+        width: 90%;
+        max-width: 450px;
+        margin: 50px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    /* Heading */
+    .register-container h2 {
+        color: #874CCC;
+        font-size: 26px;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    /* Form Styling */
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    form p {
+        width: 100%;
+        text-align: left;
+        margin-bottom: 15px;
+    }
+
+    /* Input Fields */
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        border: 2px solid #C65BCF;
+        border-radius: 6px;
+        outline: none;
+        transition: 0.3s ease-in-out;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+        border-color: #10439F;
+        box-shadow: 0px 4px 10px rgba(16, 67, 159, 0.2);
+    }
+
+    /* Submit Button */
+    .btn-register {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 12px 18px;
+        font-size: 16px;
+        background: linear-gradient(to right, #874CCC, #C65BCF);
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: 500;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s ease-in-out;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-register:hover {
+        background: linear-gradient(to right, #C65BCF, #F27BBD);
+        transform: scale(1.05);
+    }
+
+    /* Login Link */
+    p a {
+        color: #10439F;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    p a:hover {
+        text-decoration: underline;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .register-container {
+            width: 95%;
+            padding: 25px;
+        }
+
+        .register-container h2 {
+            font-size: 22px;
+        }
+
+        input {
+            font-size: 14px;
+        }
+
+        .btn-register {
+            font-size: 14px;
+            padding: 10px 15px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .register-container {
+            width: 100%;
+            padding: 20px;
+            box-shadow: none;
+        }
+
+        .register-container h2 {
+            font-size: 20px;
+        }
+
+        input {
+            font-size: 13px;
+            padding: 10px;
+        }
+
+        .btn-register {
+            font-size: 13px;
+            padding: 8px 12px;
+        }
+    }
+</style>
+
+<div class="register-container">
+    <h2>Register</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-register">Register</button>
+    </form>
+    <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+</div>
+
 {% endblock %}

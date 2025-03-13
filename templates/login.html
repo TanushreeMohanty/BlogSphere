@@ -1,13 +1,119 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Login</h2>
-<form method="POST">
-    {% csrf_token %}
-    <label>Username:</label>
-    <input type="text" name="username" required>
-    <label>Password:</label>
-    <input type="password" name="password" required>
-    <button type="submit">Login</button>
-</form>
-<p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+<style>
+    /* Centering the form */
+    .login-container {
+        width: 100%;
+        max-width: 400px;
+        margin: 100px auto;
+        padding: 30px;
+        background: #f4f4f4;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        animation: fadeIn 0.6s ease-in-out;
+    }
+
+    /* Heading */
+    .login-container h2 {
+        color: #874CCC;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    /* Input Fields */
+    .login-container input {
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0;
+        border: 2px solid #C65BCF;
+        border-radius: 5px;
+        font-size: 16px;
+        background: white;
+        transition: 0.3s ease-in-out;
+    }
+
+    /* Input Focus Effect */
+    .login-container input:focus {
+        border-color: #874CCC;
+        box-shadow: 0 0 8px rgba(135, 76, 204, 0.5);
+        outline: none;
+    }
+
+    /* Button Styling */
+    .login-container button {
+        width: 100%;
+        background: linear-gradient(to right, #874CCC, #C65BCF);
+        color: white;
+        padding: 12px;
+        border: none;
+        border-radius: 5px;
+        font-size: 18px;
+        cursor: pointer;
+        transition: background 0.3s ease-in-out;
+    }
+
+    .login-container button:hover {
+        background: linear-gradient(to right, #C65BCF, #F27BBD);
+    }
+
+    /* Register Link */
+    .login-container p {
+        margin-top: 15px;
+        font-size: 14px;
+    }
+
+    .login-container a {
+        color: #10439F;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .login-container a:hover {
+        text-decoration: underline;
+    }
+
+    /* Fade-in Animation */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 480px) {
+        .login-container {
+            width: 90%;
+            padding: 20px;
+        }
+
+        .login-container h2 {
+            font-size: 20px;
+        }
+
+        .login-container button {
+            font-size: 16px;
+        }
+    }
+</style>
+
+<!-- Login Form -->
+<div class="login-container">
+    <h2>Login</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label>Username:</label>
+        <input type="text" name="username" required>
+        <label>Password:</label>
+        <input type="password" name="password" required>
+        <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+</div>
+
 {% endblock %}

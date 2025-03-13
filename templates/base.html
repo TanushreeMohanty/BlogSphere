@@ -5,93 +5,275 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog Website</title>
     <style>
+        /* Checked */
+        /* General Styles */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
         }
+
+        /* Navbar */
         .navbar {
-            background-color: #10439F;
-            padding: 15px;
+            background: linear-gradient(135deg, #10439F, #874CCC);
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1000; /* Ensures it stays above other elements */
+
         }
+
+        /* Nav Links */
         .nav-links {
             display: flex;
-            gap: 15px;
+            gap: 20px;
         }
+
         .navbar a {
             color: white;
             text-decoration: none;
             font-weight: bold;
-        }
-        .navbar a:hover {
-            text-decoration: underline;
-        }
-        .container {
-            width: 90%;
-            max-width: 800px;
-            margin: 20px auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .messages {
-            padding: 10px;
+            position: relative;
+            padding: 8px 12px;
             border-radius: 5px;
-            margin-bottom: 15px;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .navbar a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Website Name */
+        .website-name {
+            font-size: 24px;
             font-weight: bold;
         }
-        .success { background-color: #d4edda; color: #155724; }
-        .error { background-color: #f8d7da; color: #721c24; }
+
+        .site-title {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .site-title:hover {
+            color: #F27BBD;
+        }
+
+
+        /* Responsive Navbar */
+        .menu-toggle {
+            display: none;
+            font-size: 28px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-toggle:hover {
+            transform: rotate(90deg);
+        }
+
+        /* Full-screen menu for mobile */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(16, 67, 159, 0.95);
+                text-align: center;
+                padding-top: 40px;
+                transform: translateY(-100%);
+                transition: transform 0.4s ease-in-out;
+            }
+
+            .nav-links.active {
+                display: flex;
+                transform: translateY(0);
+            }
+
+            .nav-links a {
+                font-size: 20px;
+                padding: 15px;
+                display: block;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        /* Animated button hover effect */
         .btn {
             display: inline-block;
-            padding: 8px 16px;
+            padding: 10px 16px;
             background-color: #874CCC;
             color: white;
             text-decoration: none;
             border-radius: 5px;
-            transition: background 0.3s;
+            transition: all 0.3s ease-in-out;
+            font-weight: bold;
+            box-shadow: 0px 4px 10px rgba(135, 76, 204, 0.3);
         }
+
         .btn:hover {
             background-color: #C65BCF;
+            transform: scale(1.05);
+            box-shadow: 0px 6px 15px rgba(198, 91, 207, 0.4);
         }
+
+        /* Responsive Container */
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto; /* Keeps spacing around the container */
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+        
+        /* Responsive Messages */
+        .messages {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 15px 10px; /* Adds spacing around messages */
+            font-weight: bold;
+            text-align: center;
+            font-size: 16px;
+        }
+        
+        /* Tablet View */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 15px;
+                margin: 15px auto; /* Adjusts margin for smaller screens */
+            }
+        
+            .messages {
+                font-size: 14px;
+                padding: 8px;
+                margin: 10px 5px; /* Smaller margin for messages */
+            }
+        }
+        
+        /* Mobile View */
+        @media (max-width: 480px) {
+            .container {
+                width: 95%;
+                padding: 12px;
+                margin: 10px auto; /* Keeps spacing even on small screens */
+                border-radius: 5px;
+                box-shadow: none;
+            }
+        
+            .messages {
+                font-size: 12px;
+                padding: 6px;
+                margin: 8px 4px; /* Minimum margin for better fit */
+            }
+        }
+        
+        /* Buttons */
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
         .btn-danger {
             background-color: red;
         }
+
         .btn-danger:hover {
             background-color: darkred;
         }
+
+        /* UnChecked */
+
+
+
+
+
+
+
+
+
+
+
+
+
+        {% comment %} /* Blog Post Card */
         .blog-card {
             border: 1px solid #ddd;
-            padding: 10px;
-            margin: 10px 0;
+            padding: 15px;
+            margin: 15px 0;
             border-radius: 5px;
-            background-color: #f9f9f9;
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
         }
-        
+
+        .blog-card:hover {
+            transform: translateY(-3px);
+        }
+
         .blog-card h3 {
-            margin: 0;
+            margin: 0 0 10px;
             color: #10439F;
+            font-size: 20px;
         }
+
+        .blog-card p {
+            font-size: 14px;
+            color: #333;
+        }
+
+        /* Tags */
         .tag {
             display: inline-block;
-            background: #f27bbd;
+            background: #F27BBD;
             color: white;
-            padding: 3px 8px;
+            padding: 5px 10px;
             border-radius: 5px;
-            margin-right: 5px;
             font-size: 12px;
+            margin: 2px;
         }
-        
+
+        /* Profile Picture */
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #10439F;
+            margin-bottom: 10px;
+        } {% endcomment %}
     </style>
 </head>
 <body>
 
     <div class="navbar">
+        <div class="website-name">
+            <a href="{% url 'home' %}" class="site-title">BlogSphere</a>
+        </div>
+        <div>
+            <span class="menu-toggle">&#9776;</span>
+        </div>
         <div class="nav-links">
             <a href="{% url 'home' %}">Home</a>
             {% if user.is_authenticated %}
@@ -115,7 +297,15 @@
         {% endif %}
 
         {% block content %}{% endblock %}
+
     </div>
+
+    <script>
+        // Toggle menu for mobile
+        document.querySelector(".menu-toggle").addEventListener("click", function () {
+            document.querySelector(".nav-links").classList.toggle("active");
+        });
+    </script>
 
 </body>
 </html>

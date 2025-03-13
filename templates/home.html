@@ -1,38 +1,152 @@
 {% extends "base.html" %}
 {% block content %}
-    {% if user.is_authenticated %}
-        <h2>Hi, {{ user.username }}!</h2>
-        <div class="container">
-            <h2>Blog Feed</h2>
-            {% for post in posts %}
-                <div class="blog-card">
-                    <h3>{{ post.title }}</h3>
-                    <p>{{ post.content }}</p>
-                    <p><strong>By:</strong> {{ post.author.username }} | <strong>On:</strong> {{ post.created_at }}</p>
-                    {% if post.category %}
-                        <p><strong>Category:</strong> {{ post.category.name }}</p>
-                    {% endif %}
-                    {% if post.tags.all %}
-                        <p><strong>Tags:</strong>
-                            {% for tag in post.tags.all %}
-                                <span class="tag">{{ tag.name }}</span>
-                            {% endfor %}
-                        </p>
-                    {% endif %}
-                </div>
-            {% endfor %}
-        </div>
+<style>
+    /* Blog Card Container */
+    .blog-card {
+        border: none;
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #874CCC, #C65BCF);
+        color: white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        position: relative;
+        overflow: hidden;
+    }
 
+    /* Hover Effect */
+    .blog-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
 
-    {% else %}
-        <h2>Welcome to the Blog!</h2>
-        <p>This is the homepage of your blog website.</p>
-        <p>You are not logged in.</p>
-        <a href="{% url 'login' %}">Login</a> |
-        <a href="{% url 'register' %}">Register</a>
-    {% endif %}
+    /* Card Header */
+    .blog-card h3 {
+        margin: 0 0 15px;
+        color: #fff;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    /* Card Content */
+    .blog-card p {
+        font-size: 16px;
+        line-height: 1.8;
+        color: #f4f4f4;
+    }
+
+    /* Author & Date */
+    .blog-card p strong {
+        color: #ffd700;
+    }
+
+    /* Tags Styling */
+    .tag {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 14px;
+        margin: 5px 3px;
+        transition: background 0.3s ease-in-out;
+    }
+
+    /* Tag Hover */
+    .tag:hover {
+        background: rgba(255, 255, 255, 0.4);
+    }
+
+    /* Animated Gradient Border */
+    .blog-card::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 10%, transparent 70%);
+        transform: rotate(25deg);
+        transition: opacity 0.5s ease-in-out;
+        opacity: 0;
+    }
+
+    /* Glow Effect on Hover */
+    .blog-card:hover::before {
+        opacity: 1;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .container {
+            width: 95%;
+            padding: 15px;
+        }
+
+        .blog-card {
+            padding: 15px;
+            margin: 12px 0;
+        }
+
+        .blog-card h3 {
+            font-size: 22px;
+        }
+
+        .blog-card p {
+            font-size: 14px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .container {
+            width: 100%;
+            padding: 12px;
+        }
+
+        .blog-card {
+            padding: 12px;
+            margin: 10px 0;
+        }
+
+        .blog-card h3 {
+            font-size: 20px;
+        }
+
+        .blog-card p {
+            font-size: 13px;
+        }
+    }
+
+</style>
+{% if user.is_authenticated %}
+    <h2>Hi, {{ user.username }}!</h2>
+    <div class="container">
+        <h2>Blog Feed</h2>
+        {% for post in posts %}
+            <div class="blog-card">
+                <h3>{{ post.title }}</h3>
+                <p>{{ post.content }}</p>
+                <p><strong>By:</strong> {{ post.author.username }} | <strong>On:</strong> {{ post.created_at }}</p>
+                {% if post.category %}
+                    <p><strong>Category:</strong> {{ post.category.name }}</p>
+                {% endif %}
+                {% if post.tags.all %}
+                    <p><strong>Tags:</strong>
+                        {% for tag in post.tags.all %}
+                            <span class="tag">{{ tag.name }}</span>
+                        {% endfor %}
+                    </p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <h2>Welcome to the Blog!</h2>
+    <p>This is the homepage of your blog website.</p>
+    <p>You are not logged in.</p>
+    <a href="{% url 'login' %}">Login</a> |
+    <a href="{% url 'register' %}">Register</a>
+{% endif %}
+
 {% endblock %}
-
-
-
-

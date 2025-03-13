@@ -1,12 +1,128 @@
 {% extends "base.html" %}
 {% block content %}
+<style>
+    /* Container */
+    .container {
+        width: 90%;
+        max-width: 600px;
+        margin: 50px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    /* Heading */
+    .container h2 {
+        color: #874CCC;
+        font-size: 26px;
+        margin-bottom: 20px;
+    }
+
+    /* Form Styling */
+    form {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+    }
+
+    form p {
+        margin-bottom: 15px;
+    }
+
+    label {
+        font-weight: bold;
+        color: #10439F;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input, textarea, select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+        transition: 0.3s ease-in-out;
+    }
+
+    input:focus, textarea:focus, select:focus {
+        border-color: #C65BCF;
+        box-shadow: 0 0 8px rgba(198, 91, 207, 0.5);
+        outline: none;
+    }
+
+    /* Submit Button */
+    .btn {
+        background: linear-gradient(to right, #874CCC, #C65BCF);
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s ease-in-out;
+        text-align: center;
+    }
+
+    .btn:hover {
+        background: linear-gradient(to right, #C65BCF, #F27BBD);
+        transform: scale(1.05);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .container {
+            width: 95%;
+            padding: 20px;
+        }
+
+        .container h2 {
+            font-size: 22px;
+        }
+
+        input, textarea, select {
+            font-size: 14px;
+        }
+
+        .btn {
+            font-size: 14px;
+            padding: 10px 15px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .container {
+            width: 100%;
+            padding: 15px;
+            box-shadow: none;
+        }
+
+        .container h2 {
+            font-size: 20px;
+        }
+
+        input, textarea, select {
+            font-size: 13px;
+        }
+
+        .btn {
+            font-size: 13px;
+            padding: 8px 12px;
+        }
+    }
+</style>
+
 <div class="container">
     <h2>{% if form.instance.pk %}Edit{% else %}Create{% endif %} Blog Post</h2>
+    
     <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn">{% if form.instance.pk %}Update{% else %}Post{% endif %} </button>
-
+        <button type="submit" class="btn">{% if form.instance.pk %}Update{% else %}Post{% endif %}</button>
     </form>
 </div>
+
 {% endblock %}

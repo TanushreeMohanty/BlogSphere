@@ -1,29 +1,175 @@
 {% extends "base.html" %}
 {% block content %}
+<style>
+    /* Container */
+    .container {
+        width: 90%;
+        max-width: 800px;
+        margin: 20px auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    /* Heading */
+    .container h2 {
+        color: #874CCC;
+        font-size: 26px;
+        margin-bottom: 20px;
+    }
+
+    /* Button Styles */
+    .btn {
+        display: inline-block;
+        background: linear-gradient(to right, #874CCC, #C65BCF);
+        color: white;
+        padding: 10px 15px;
+        margin: 10px 5px;
+        border-radius: 5px;
+        font-size: 16px;
+        text-decoration: none;
+        transition: 0.3s ease-in-out;
+    }
+
+    .btn:hover {
+        background: linear-gradient(to right, #C65BCF, #F27BBD);
+        transform: scale(1.05);
+    }
+
+    /* Delete Button */
+    .btn-delete {
+        background: #e74c3c;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s ease-in-out;
+    }
+
+    .btn-delete:hover {
+        background: #c0392b;
+        transform: scale(1.05);
+    }
+
+    /* Blog Card Styling */
+    .blog-card {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 20px 0;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        text-align: left;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .blog-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .blog-card h3 {
+        color: #10439F;
+        font-size: 22px;
+        margin-bottom: 10px;
+    }
+
+    .blog-card p {
+        font-size: 14px;
+        color: #333;
+        line-height: 1.6;
+    }
+
+    /* Tags */
+    .tag {
+        display: inline-block;
+        background: #F27BBD;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 12px;
+        margin: 2px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .container {
+            width: 95%;
+            padding: 15px;
+        }
+
+        .blog-card {
+            padding: 15px;
+        }
+
+        .blog-card h3 {
+            font-size: 20px;
+        }
+
+        .blog-card p {
+            font-size: 13px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .container {
+            width: 100%;
+            padding: 10px;
+            box-shadow: none;
+        }
+
+        .blog-card {
+            padding: 12px;
+        }
+
+        .blog-card h3 {
+            font-size: 18px;
+        }
+
+        .blog-card p {
+            font-size: 12px;
+        }
+
+        .btn, .btn-delete {
+            font-size: 14px;
+            padding: 8px 12px;
+        }
+    }
+</style>
+
 <div class="container">
     <h2>My Blogs</h2>
     <a href="{% url 'create_post' %}" class="btn">Create New Post</a>
+    
     {% for post in posts %}
         <div class="blog-card">
             <h3>{{ post.title }}</h3>
             <p>{{ post.content }}</p>
             <p><strong>On:</strong> {{ post.created_at }}</p>
+
             {% if post.category %}
                 <p><strong>Category:</strong> {{ post.category.name }}</p>
             {% endif %}
+
             {% if post.tags.all %}
                 <p><strong>Tags:</strong>
                     {% for tag in post.tags.all %}
                         <span class="tag">{{ tag.name }}</span>
                     {% endfor %}
                 </p>
-            {% endif %}            
+            {% endif %}   
+
             <a href="{% url 'edit_post' post.id %}" class="btn">Edit</a>
-            <form action="{% url 'delete_post' post.id %}" method="POST">
+            
+            <form action="{% url 'delete_post' post.id %}" method="POST" style="display:inline;">
                 {% csrf_token %}
                 <button type="submit" class="btn-delete">Delete</button>
             </form>
         </div>
     {% endfor %}
 </div>
+
 {% endblock %}
